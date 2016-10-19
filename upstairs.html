@@ -17,8 +17,16 @@
         </style>
     </head>
     <body>
-            <div id="queue">
-                DATA LOADING...
+            <div>
+                <h1>Upstairs Bathroom</h1>
+
+                <p>Queue Size: <span id="queue-size">DATA LOADING...</span></p>
+
+                <h2>People in Queue:</h2>
+                <ol id="queue-people">
+                    <li>DATA LOADING...</li>
+                </ol>
+
             </div>
 
 <script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
@@ -34,10 +42,20 @@
   firebase.initializeApp(config);
   var database = firebase.database();
   var upcount = firebase.database().ref('upstairs');
-  upcount.on('value', function(snapshot) {
-      console.log("ERE IAM JH");
-      document.getElementById('queue').innerHTML=snapshot.val();
-  });
+  upcount.on('value', refreshdata);
+
+
+  function refreshdata(snapshot) {
+      var list = snapshot.val();
+      var ol = document.getElementById('queue-people');
+      ol.innerHTML = '';
+      for (item in list) {
+          var li = document.createElement('LI');
+          li.appendChild(document.createTextNode(list[item]));
+          ol.appendChild(li);
+      }
+   //   document.getElementById('queue').innerHTML=snapshot.val();
+  }
 </script>
     </body>
 </html>
