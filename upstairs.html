@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>pq Project</title>
+        <style>
+            button, select {
+                font-size: 10vw;
+                margin: 1vmin;
+                padding: 10px;
+            }
+            div {
+                width: 100%;
+                max-width: 300px;
+                margin: auto;
+                text-align: center;
+                border: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+            <div id="queue">
+                DATA LOADING...
+            </div>
+
+<script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAeiJxJ4hDzxiAYSAHbL84xOpUlLMWsbnk",
+    authDomain: "pq-goopot.firebaseapp.com",
+    databaseURL: "https://pq-goopot.firebaseio.com",
+    storageBucket: "pq-goopot.appspot.com",
+    messagingSenderId: "425687954432"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+  var upcount = firebase.database().ref('upstairs');
+  upcount.on('value', function(snapshot) {
+      console.log("ERE IAM JH");
+      document.getElementById('queue').innerHTML=snapshot.val();
+  });
+</script>
+    </body>
+</html>
