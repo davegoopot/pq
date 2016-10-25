@@ -27,6 +27,9 @@
                     <li>DATA LOADING...</li>
                 </ol>
 
+                <input id="newname" type="text">
+                <button onclick="addtoqueue();">Add to queue</button>
+                <button onclick="removefromqueue();">Done!</button>
             </div>
 
 <script src="https://www.gstatic.com/firebasejs/3.5.0/firebase.js"></script>
@@ -51,10 +54,24 @@
       ol.innerHTML = '';
       for (item in list) {
           var li = document.createElement('LI');
+          li.setAttribute('data-key', item)
           li.appendChild(document.createTextNode(list[item]));
           ol.appendChild(li);
       }
-   //   document.getElementById('queue').innerHTML=snapshot.val();
+  }
+
+  function addtoqueue() {
+      var input = document.getElementById('newname');
+      upcount.push(input.value);
+  }
+
+  function removefromqueue() {
+      var firstinqueue = document.getElementById('queue-people').children[0];
+      var keytoremove = firstinqueue.getAttribute('data-key');
+      var ref = database.ref('upstairs/' + keytoremove);
+      ref.remove().catch(function(error) {
+          alert("Something broke: " + error);
+      });
   }
 </script>
     </body>
